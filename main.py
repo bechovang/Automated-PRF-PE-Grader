@@ -7,17 +7,17 @@ EXAM_ROOT_DIR = "exam"                # Thư mục chứa các đề thi
 QUESTIONS = ["Q1", "Q2", "Q3", "Q4"]
 TIMEOUT_SECONDS = 5                   # Thời gian tối đa để một chương trình chạy
 
-# --- MÃ MÀU ANSI ĐỂ IN ĐẸP HƠN ---
+# --- SIMPLE TEXT OUTPUT (NO COLORS) ---
 class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    HEADER = ''
+    OKBLUE = ''
+    OKCYAN = ''
+    OKGREEN = ''
+    WARNING = ''
+    FAIL = ''
+    ENDC = ''
+    BOLD = ''
+    UNDERLINE = ''
 
 def parse_test_cases(file_path):
     """Phân tích file TESTCASE.txt và trả về một dictionary chứa các test case."""
@@ -73,10 +73,10 @@ def grade_student(student_id, all_test_cases):
     for q_name in QUESTIONS:
         print(f"\n{bcolors.BOLD}--- Câu hỏi {q_name} ---{bcolors.ENDC}")
         
-        exe_path = os.path.join(student_dir, q_name, "run", "main.exe")
+        exe_path = os.path.join(student_dir, q_name, "run", f"{q_name}.exe")
         
         if not os.path.exists(exe_path):
-            print(f"{bcolors.FAIL}LỖI: Không tìm thấy file 'main.exe'. Bỏ qua.{bcolors.ENDC}")
+            print(f"{bcolors.FAIL}LỖI: Không tìm thấy file '{q_name}.exe'. Bỏ qua.{bcolors.ENDC}")
             student_scores[q_name] = -1.0
             continue
 
