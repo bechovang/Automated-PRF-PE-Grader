@@ -1,0 +1,223 @@
+[Q1]
+INPUT:
+12 18
+EXPECTED_OUTPUT:
+GCD: 6
+LCM: 36
+---
+INPUT:
+7 5
+EXPECTED_OUTPUT:
+GCD: 1
+LCM: 35
+---
+INPUT:
+10 20
+EXPECTED_OUTPUT:
+GCD: 10
+LCM: 20
+---
+INPUT:
+50 50
+EXPECTED_OUTPUT:
+GCD: 50
+LCM: 50
+---
+INPUT:
+1 100
+EXPECTED_OUTPUT:
+GCD: 1
+LCM: 100
+---
+INPUT:
+48 36
+EXPECTED_OUTPUT:
+GCD: 12
+LCM: 144
+---
+INPUT:
+97 89
+EXPECTED_OUTPUT:
+GCD: 1
+LCM: 8633
+---
+INPUT:
+1 1
+EXPECTED_OUTPUT:
+GCD: 1
+LCM: 1
+---
+INPUT:
+10000 1
+EXPECTED_OUTPUT:
+GCD: 1
+LCM: 10000
+---
+INPUT:
+720 360
+EXPECTED_OUTPUT:
+GCD: 360
+LCM: 720
+
+[Q2]
+INPUT:
+0.5
+EXPECTED_OUTPUT:
+Total Fare: $1.50
+---
+INPUT:
+8.0
+EXPECTED_OUTPUT:
+Total Fare: $8.50
+---
+INPUT:
+15.0
+EXPECTED_OUTPUT:
+Total Fare: $14.25
+---
+INPUT:
+1.0
+EXPECTED_OUTPUT:
+Total Fare: $1.50
+---
+INPUT:
+10.0
+EXPECTED_OUTPUT:
+Total Fare: $10.50
+---
+INPUT:
+10.1
+EXPECTED_OUTPUT:
+Total Fare: $10.58
+---
+INPUT:
+2.0
+EXPECTED_OUTPUT:
+Total Fare: $2.50
+---
+INPUT:
+500.0
+EXPECTED_OUTPUT:
+Total Fare: $378.00
+---
+INPUT:
+0.01
+EXPECTED_OUTPUT:
+Total Fare: $1.50
+---
+INPUT:
+9.9
+EXPECTED_OUTPUT:
+Total Fare: $10.40
+
+[Q3]
+INPUT:
+rock
+scissors
+EXPECTED_OUTPUT:
+Player 1 wins
+---
+INPUT:
+paper
+paper
+EXPECTED_OUTPUT:
+It's a tie
+---
+INPUT:
+scissors
+rock
+EXPECTED_OUTPUT:
+Player 2 wins
+---
+INPUT:
+rock
+rock
+EXPECTED_OUTPUT:
+It's a tie
+---
+INPUT:
+scissors
+scissors
+EXPECTED_OUTPUT:
+It's a tie
+---
+INPUT:
+paper
+rock
+EXPECTED_OUTPUT:
+Player 1 wins
+---
+INPUT:
+rock
+paper
+EXPECTED_OUTPUT:
+Player 2 wins
+---
+INPUT:
+scissors
+paper
+EXPECTED_OUTPUT:
+Player 1 wins
+---
+INPUT:
+paper
+scissors
+EXPECTED_OUTPUT:
+Player 2 wins
+---
+INPUT:
+paper
+rock
+EXPECTED_OUTPUT:
+Player 1 wins
+
+[Q4]
+INPUT:
+xin     chao  cac ban
+EXPECTED_OUTPUT:
+XIN CHAO CAC BAN
+---
+INPUT:
+   hello   world   
+EXPECTED_OUTPUT:
+HELLO WORLD
+---
+INPUT:
+mIxEd    CaSe      wITh    messy    sPaCes
+EXPECTED_OUTPUT:
+MIXED CASE WITH MESSY SPACES
+---
+INPUT:
+    leading spaces and    multiple   spaces in between
+EXPECTED_OUTPUT:
+LEADING SPACES AND MULTIPLE SPACES IN BETWEEN
+---
+INPUT:
+trailing spaces and mixed case HeLlO   
+EXPECTED_OUTPUT:
+TRAILING SPACES AND MIXED CASE HELLO
+---
+INPUT:
+a  b     c  d
+EXPECTED_OUTPUT:
+A B C D
+---
+INPUT:
+single
+EXPECTED_OUTPUT:
+SINGLE
+---
+INPUT:
+      many      spaces      before      and      after      
+EXPECTED_OUTPUT:
+MANY SPACES BEFORE AND AFTER
+---
+INPUT:
+         
+EXPECTED_OUTPUT:
+
+---
+INPUT:
+THIS IS A FREE SCORE
+EXPECTED_OUTPUT:
+THIS IS A FREE SCORE
