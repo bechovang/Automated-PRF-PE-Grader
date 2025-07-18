@@ -2,12 +2,12 @@ import os
 import subprocess
 
 # --- CONFIGURATION ---
-SUBMISSIONS_ROOT_DIR = "submissions"  # Root folder for all student submissions
-EXAM_ROOT_DIR = "exam"                # Root folder for all exam test cases
+SUBMISSIONS_ROOT_DIR = "submissions"  # Thư mục chứa bài nộp của sinh viên
+EXAM_ROOT_DIR = "exam"                # Thư mục chứa các đề thi
 QUESTIONS = ["Q1", "Q2", "Q3", "Q4"]
-TIMEOUT_SECONDS = 5                   # Max time for a program to run
+TIMEOUT_SECONDS = 5                   # Thời gian tối đa để một chương trình chạy
 
-# --- ANSI COLORS FOR PRETTY PRINTING ---
+# --- MÃ MÀU ANSI ĐỂ IN ĐẸP HƠN ---
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -20,16 +20,15 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def parse_test_cases(file_path):
-    """Parses the TESTCASE.txt file and returns a dictionary of test cases."""
+    """Phân tích file TESTCASE.txt và trả về một dictionary chứa các test case."""
     if not os.path.exists(file_path):
-        print(f"{bcolors.FAIL}Error: Test case file '{file_path}' not found.{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}Lỗi: Không tìm thấy file test case '{file_path}'.{bcolors.ENDC}")
         return None
 
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
     test_cases = {}
-    # Split by the question tag, e.g., "[Q1]"
     question_blocks = content.split('[')[1:]
 
     for block in question_blocks:
@@ -44,9 +43,7 @@ def parse_test_cases(file_path):
             if not case.strip():
                 continue
             
-            # Split by the first occurrence of 'EXPECTED_OUTPUT:'
             io_parts = case.strip().split('EXPECTED_OUTPUT:', 1)
-            # Make sure we have both parts before proceeding
             if len(io_parts) == 2:
                 input_part = io_parts[0].replace('INPUT:', '', 1).strip()
                 output_part = io_parts[1].strip()
@@ -59,35 +56,32 @@ def parse_test_cases(file_path):
     return test_cases
 
 def normalize_output(text):
-    """Normalizes output by processing only the content after 'OUTPUT:' and stripping whitespace."""
+    """Chuẩn hóa output: chỉ lấy nội dung sau 'OUTPUT:' và loại bỏ khoảng trắng thừa."""
     if "OUTPUT:" in text:
-        # Get the part *after* "OUTPUT:", which is a string
         relevant_text = text.split("OUTPUT:", 1)[1]
     else:
-        # If "OUTPUT:" is not found, use the whole text
         relevant_text = text
     
-    # Now, 'relevant_text' is guaranteed to be a string. Normalize it.
     return "\n".join(line.strip() for line in relevant_text.strip().splitlines() if line.strip())
 
 def grade_student(student_id, all_test_cases):
-    """Grades all questions for a single student and returns a dictionary of scores."""
-    print(f"\n{bcolors.HEADER}{'='*20} Grading Student: {student_id} {'='*20}{bcolors.ENDC}")
+    """Chấm tất cả các câu hỏi cho một sinh viên và trả về một dictionary điểm số."""
+    print(f"\n{bcolors.HEADER}{'='*20} Đang chấm bài sinh viên: {student_id} {'='*20}{bcolors.ENDC}")
     student_dir = os.path.join(SUBMISSIONS_ROOT_DIR, student_id)
     student_scores = {}
 
     for q_name in QUESTIONS:
-        print(f"\n{bcolors.BOLD}--- Question {q_name} ---{bcolors.ENDC}")
+        print(f"\n{bcolors.BOLD}--- Câu hỏi {q_name} ---{bcolors.ENDC}")
         
         exe_path = os.path.join(student_dir, q_name, "run", "main.exe")
         
         if not os.path.exists(exe_path):
-            print(f"{bcolors.FAIL}FAIL: 'main.exe' not found. Skipping.{bcolors.ENDC}")
-            student_scores[q_name] = -1.0  # Special value for "not graded"
+            print(f"{bcolors.FAIL}LỖI: Không tìm thấy file 'main.exe'. Bỏ qua.{bcolors.ENDC}")
+            student_scores[q_name] = -1.0
             continue
 
         if q_name not in all_test_cases:
-            print(f"{bcolors.WARNING}WARN: No test cases found for {q_name}. Skipping.{bcolors.ENDC}")
+            print(f"{bcolors.WARNING}CẢNH BÁO: Không tìm thấy test case cho {q_name}. Bỏ qua.{bcolors.ENDC}")
             student_scores[q_name] = -1.0
             continue
 
@@ -107,23 +101,34 @@ def grade_student(student_id, all_test_cases):
                 )
                 
                 if process.returncode != 0:
-                    print(f"  Test Case #{test_num}: {bcolors.FAIL}RUNTIME ERROR{bcolors.ENDC}")
+                    # CẬP NHẬT Ở ĐÂY
+                    print(f"  {q_name} - Test Case #{test_num}: {bcolors.FAIL}LỖI CHẠY CHƯƠNG TRÌNH (RUNTIME ERROR){bcolors.ENDC}")
+                    if process.stderr:
+                        print(f"    Thông điệp lỗi: {process.stderr.strip()}")
                     continue
 
                 actual_output = normalize_output(process.stdout)
 
                 if actual_output == expected_output:
-                    print(f"  Test Case #{test_num}: {bcolors.OKGREEN}PASS{bcolors.ENDC}")
+                    # CẬP NHẬT Ở ĐÂY
+                    print(f"  {q_name} - Test Case #{test_num}: {bcolors.OKGREEN}ĐÚNG (PASS){bcolors.ENDC}")
                     passed_count += 1
                 else:
-                    print(f"  Test Case #{test_num}: {bcolors.FAIL}FAIL{bcolors.ENDC}")
-                    print(f"    {bcolors.WARNING}Expected:{bcolors.ENDC}\n      '{expected_output}'")
-                    print(f"    {bcolors.FAIL}Got:{bcolors.ENDC}\n      '{actual_output}'")
+                    # CẬP NHẬT Ở ĐÂY
+                    print(f"  {q_name} - Test Case #{test_num}: {bcolors.FAIL}SAI (FAIL){bcolors.ENDC}")
+                    print(f"    {bcolors.OKBLUE}--> Input đã sử dụng:{bcolors.ENDC}")
+                    print(f"      '''\n      {test_input}\n      '''")
+                    print(f"    {bcolors.WARNING}--> Kết quả mong muốn:{bcolors.ENDC}")
+                    print(f"      '''\n      {expected_output}\n      '''")
+                    print(f"    {bcolors.FAIL}--> Kết quả của sinh viên:{bcolors.ENDC}")
+                    print(f"      '''\n      {actual_output}\n      '''")
 
             except subprocess.TimeoutExpired:
-                print(f"  Test Case #{test_num}: {bcolors.FAIL}TIMEOUT{bcolors.ENDC}")
+                # CẬP NHẬT Ở ĐÂY
+                print(f"  {q_name} - Test Case #{test_num}: {bcolors.FAIL}LỖI THỜI GIAN (TIMEOUT){bcolors.ENDC}")
             except Exception as e:
-                print(f"  Test Case #{test_num}: {bcolors.FAIL}GRADING SCRIPT ERROR: {e}{bcolors.ENDC}")
+                # CẬP NHẬT Ở ĐÂY
+                print(f"  {q_name} - Test Case #{test_num}: {bcolors.FAIL}LỖI SCRIPT CHẤM BÀI: {e}{bcolors.ENDC}")
 
         score = (passed_count / total_cases) * 100 if total_cases > 0 else 0
         student_scores[q_name] = score
@@ -131,14 +136,14 @@ def grade_student(student_id, all_test_cases):
     return student_scores
 
 def display_summary(student_id, scores):
-    """Prints a final score summary table for a student."""
-    print(f"\n{bcolors.OKBLUE}{'='*15} Final Score Summary for {student_id} {'='*15}{bcolors.ENDC}")
+    """In bảng tổng kết điểm cuối cùng cho một sinh viên."""
+    print(f"\n{bcolors.OKBLUE}{'='*15} Bảng điểm của sinh viên {student_id} {'='*15}{bcolors.ENDC}")
     total_score = 0
     num_graded_questions = 0
 
     for q_name, score in scores.items():
         if score < 0:
-            print(f"  {q_name:<5}: {bcolors.WARNING}NOT GRADED (File not found){bcolors.ENDC}")
+            print(f"  {q_name:<5}: {bcolors.WARNING}KHÔNG CHẤM (Không tìm thấy file){bcolors.ENDC}")
         else:
             color = bcolors.OKGREEN if score == 100 else (bcolors.WARNING if score > 0 else bcolors.FAIL)
             print(f"  {q_name:<5}: {color}{score:6.2f}%{bcolors.ENDC}")
@@ -146,19 +151,17 @@ def display_summary(student_id, scores):
             num_graded_questions += 1
     
     average_score = total_score / num_graded_questions if num_graded_questions > 0 else 0
-    print("-" * 55)
-    print(f"  {bcolors.BOLD}Average Score: {average_score:.2f}%{bcolors.ENDC}")
-    print(f"{bcolors.OKBLUE}{'='*55}{bcolors.ENDC}")
+    print("-" * 60)
+    print(f"  {bcolors.BOLD}Điểm trung bình: {average_score:.2f}%{bcolors.ENDC}")
+    print(f"{bcolors.OKBLUE}{'='*60}{bcolors.ENDC}")
 
 
 def main():
-    """Main function to run the grading tool."""
-    print(f"{bcolors.BOLD}Starting Automated Grading Process...{bcolors.ENDC}")
+    """Hàm chính để chạy công cụ chấm bài."""
+    print(f"{bcolors.BOLD}Bắt đầu quy trình chấm bài tự động...{bcolors.ENDC}")
     
-    # Ask the user for the exam name
-    test_name = input(f"{bcolors.OKCYAN}Enter the test name to grade (e.g., Test1, Test2): {bcolors.ENDC}")
+    test_name = input(f"{bcolors.OKCYAN}Nhập tên bài thi cần chấm (ví dụ: Test1, Test2): {bcolors.ENDC}")
     
-    # Construct the path to the test case file
     testcase_path = os.path.join(EXAM_ROOT_DIR, test_name, "TESTCASE.txt")
 
     all_test_cases = parse_test_cases(testcase_path)
@@ -166,7 +169,7 @@ def main():
         return
 
     if not os.path.isdir(SUBMISSIONS_ROOT_DIR):
-        print(f"{bcolors.FAIL}Error: Submissions directory '{SUBMISSIONS_ROOT_DIR}' not found.{bcolors.ENDC}")
+        print(f"{bcolors.FAIL}Lỗi: Không tìm thấy thư mục '{SUBMISSIONS_ROOT_DIR}'.{bcolors.ENDC}")
         return
 
     student_folders = sorted([
@@ -175,14 +178,14 @@ def main():
     ])
 
     if not student_folders:
-        print(f"{bcolors.WARNING}No student folders found in '{SUBMISSIONS_ROOT_DIR}'.{bcolors.ENDC}")
+        print(f"{bcolors.WARNING}Không tìm thấy thư mục sinh viên nào trong '{SUBMISSIONS_ROOT_DIR}'.{bcolors.ENDC}")
         return
 
     for student_id in student_folders:
         student_scores = grade_student(student_id, all_test_cases)
         display_summary(student_id, student_scores)
     
-    print(f"\n{bcolors.BOLD}Grading process finished.{bcolors.ENDC}")
+    print(f"\n{bcolors.BOLD}Quy trình chấm bài đã hoàn tất.{bcolors.ENDC}")
 
 
 if __name__ == "__main__":

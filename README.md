@@ -195,3 +195,142 @@ Index of smallest element: 1
 
 6.  **Tính Linh Hoạt:**
     Bạn có thể có các dòng trống giữa dấu phân tách `---` và khối `INPUT:` tiếp theo, hoặc giữa một test case và một thẻ câu hỏi mới. Công cụ sẽ bỏ qua chúng.
+
+
+------------------------
+
+
+# Hướng Dẫn Làm Bài Tập Lập Trình C
+
+## Lời Giới Thiệu
+
+Chào mừng bạn đến với bài tập lập trình C! Tài liệu này sẽ hướng dẫn bạn cách hoàn thành các bài toán bằng cách sử dụng các file mẫu đã được cung cấp (`Q1.c`, `Q2.c`, v.v.).
+
+Mục đích của định dạng này là để giúp bạn **tập trung vào logic giải quyết vấn đề cốt lõi (thuật toán)** thay vì phải viết các đoạn mã lặp đi lặp lại để đọc dữ liệu đầu vào và in kết quả. Mỗi file được cấu trúc thành hai phần chính:
+
+1.  **Hàm Cần Hoàn Thiện**: Đây là một hàm cụ thể nơi bạn sẽ viết toàn bộ mã nguồn của mình. Vị trí này được đánh dấu rõ ràng bằng các dòng chú thích `// VIẾT MÃ CỦA BẠN VÀO ĐÂY` và `// KẾT THÚC PHẦN MÃ CỦA BẠN`.
+2.  **Hàm `main`**: Hàm này đã được **khóa cố định** và được sử dụng để kiểm tra và chấm điểm. Nó sẽ xử lý việc đọc dữ liệu, gọi hàm của bạn và in kết quả theo một định dạng chuẩn.
+
+### Quy Tắc Vàng
+**KHÔNG, trong bất kỳ trường hợp nào, được sửa đổi hàm `main` hoặc bất kỳ đoạn mã nào nằm ngoài khối được chỉ định.** Mọi thay đổi có thể khiến công cụ chấm bài tự động chấm sai bài của bạn, ngay cả khi logic của bạn đúng.
+
+---
+
+## Bài toán 1: Q1.c - Kiểm Tra Số Chính Phương
+
+### Đề bài
+Nhiệm vụ của bạn là viết một hàm để xác định xem một số nguyên `n` cho trước có phải là số chính phương hay không. Một số chính phương là một số nguyên bằng bình phương của một số nguyên khác (ví dụ: 9 là số chính phương vì 3 * 3 = 9).
+
+### Nhiệm vụ của bạn trong `Q1.c`
+Bạn phải hoàn thành hàm `is_perfect_square`.
+
+```c
+int is_perfect_square(int n) {
+    // VIẾT MÃ CỦA BẠN VÀO ĐÂY
+
+    // Logic của bạn được viết ở đây.
+    // Bạn phải trả về 1 nếu n là số chính phương.
+    // Bạn phải trả về 0 nếu n không phải là số chính phương.
+
+    // KẾT THÚC PHẦN MÃ CỦA BẠN
+}
+```
+
+-   **Đầu vào**: Hàm nhận một số nguyên `n`.
+-   **Đầu ra**: Hàm phải `return` một số nguyên: `1` nếu là số chính phương ("Yes") và `0` nếu không phải ("No").
+
+**Cách Hoạt Động:** Hàm `main` sẽ đọc một số từ người dùng, truyền nó vào hàm `is_perfect_square` của bạn, và sau đó in ra "Yes" hoặc "No" dựa trên giá trị `1` hoặc `0` mà hàm của bạn trả về.
+
+---
+
+## Bài toán 2: Q2.c - Tìm Vị Trí Nhỏ Nhất và Lớn Nhất
+
+### Đề bài
+Nhiệm vụ của bạn là tìm chỉ số (bắt đầu từ 0) của phần tử nhỏ nhất và lớn nhất trong một mảng số nguyên cho trước. Nếu có nhiều phần tử cùng đạt giá trị nhỏ nhất/lớn nhất, chỉ cần lấy chỉ số của phần tử xuất hiện đầu tiên.
+
+### Nhiệm vụ của bạn trong `Q2.c`
+Bạn phải hoàn thành hàm `find_min_max_indices`. Hàm này đặc biệt vì nó không trả về giá trị. Thay vào đó, nó sử dụng **con trỏ** để sửa đổi trực tiếp các biến trong hàm `main`.
+
+```c
+void find_min_max_indices(int arr[], int n, int *min_idx, int *max_idx) {
+    // VIẾT MÃ CỦA BẠN VÀO ĐÂY
+
+    // Logic của bạn được viết ở đây.
+    // Bạn cần tìm các chỉ số chính xác và gán chúng.
+    // Ví dụ: *min_idx = mot_chi_so_nao_do;
+    //       *max_idx = mot_chi_so_khac;
+
+    // KẾT THÚC PHẦN MÃ CỦA BẠN
+}
+```
+
+-   **Đầu vào**: Hàm nhận mảng `arr`, kích thước `n` của mảng, và hai con trỏ `min_idx` và `max_idx`.
+-   **Nhiệm vụ**: Mã của bạn phải tìm các chỉ số chính xác và cập nhật giá trị tại các địa chỉ bộ nhớ mà `min_idx` và `max_idx` đang trỏ tới.
+
+**Cách Hoạt Động:** Hàm `main` đọc dữ liệu mảng, sau đó gọi hàm của bạn và truyền địa chỉ của hai biến `min_index` và `max_index` của nó. Các cập nhật của hàm bạn sẽ được phản ánh trong `main`, và `main` sẽ in ra kết quả cuối cùng.
+
+---
+
+## Bài toán 3: Q3.c - Tính Tổng Có Điều Kiện
+
+### Đề bài
+Nhiệm vụ của bạn là tính tổng các phần tử trong một mảng số nguyên dựa trên một điều kiện:
+-   Nếu **phần tử đầu tiên** của mảng là một số nguyên tố, hãy tính và trả về tổng của tất cả các số **chẵn** trong mảng.
+-   Nếu **phần tử đầu tiên** không phải là số nguyên tố, hãy tính và trả về tổng của tất cả các số **lẻ** trong mảng.
+
+### Nhiệm vụ của bạn trong `Q3.c`
+Bạn phải hoàn thành hàm `calculate_conditional_sum`.
+
+```c
+long long calculate_conditional_sum(int arr[], int n) {
+    // VIẾT MÃ CỦA BẠN VÀO ĐÂY
+
+    // Logic của bạn được viết ở đây.
+    // 1. Kiểm tra xem arr có phải là số nguyên tố không.
+    // 2. Dựa vào kết quả kiểm tra, duyệt qua mảng và tính tổng tương ứng.
+    // 3. Trả về tổng cuối cùng.
+
+    // KẾT THÚC PHẦN MÃ CỦA BẠN
+}
+```
+
+-   **Đầu vào**: Hàm nhận mảng `arr` và kích thước `n` của mảng.
+-   **Đầu ra**: Hàm phải `return` tổng đã tính dưới dạng `long long` để tránh khả năng bị tràn số.
+
+**Cách Hoạt Động:** Hàm `main` đọc dữ liệu mảng, truyền nó vào hàm của bạn, và sau đó in ra giá trị `long long` duy nhất mà hàm của bạn trả về.
+
+---
+
+## Bài toán 4: Q4.c - Tìm Ngày và Tháng Kế Tiếp
+
+### Đề bài
+Nhiệm vụ của bạn là tính toán ngày và tháng của ngày kế tiếp. Lịch được đơn giản hóa: **Tháng 2 luôn có 28 ngày**, và năm được bỏ qua (ngày sau ngày 31/12 là ngày 01/01).
+
+### Nhiệm vụ của bạn trong `Q4.c`
+Bạn phải hoàn thành hàm `find_next_day`. Tương tự như Q2, hàm này sử dụng con trỏ để sửa đổi các biến trong `main`.
+
+```c
+void find_next_day(int *day, int *month) {
+    // VIẾT MÃ CỦA BẠN VÀO ĐÂY
+
+    // Logic của bạn được viết ở đây.
+    // Bạn cần tăng ngày và tháng một cách chính xác.
+    // Hãy nhớ xử lý các trường hợp chuyển tháng (ví dụ: từ 30/04 sang 01/05)
+    // và trường hợp cuối năm (từ 31/12 sang 01/01).
+    // Sử dụng (*day) và (*month) để truy cập và sửa đổi giá trị.
+    // Ví dụ: (*day)++;
+
+    // KẾT THÚC PHẦN MÃ CỦA BẠN
+}
+```
+
+-   **Đầu vào**: Hàm nhận con trỏ tới các biến `day` và `month`.
+-   **Nhiệm vụ**: Mã của bạn phải cập nhật các giá trị tại các địa chỉ bộ nhớ này thành ngày kế tiếp.
+
+**Cách Hoạt Động:** Hàm `main` đọc một ngày và tháng, truyền địa chỉ của chúng vào hàm của bạn, và sau đó in ra các giá trị mới sau khi hàm của bạn đã sửa đổi chúng.
+
+## Lời Nhắc Cuối Cùng
+-   **Tập trung vào logic** bên trong hàm được chỉ định cho bạn.
+-   Không tự viết các lệnh `printf` hay `scanf` bên trong hàm mà bạn đang hoàn thiện.
+-   Không thay đổi định nghĩa của hàm (tên, tham số, hoặc kiểu trả về).
+-   Kiểm tra logic của bạn cẩn thận trước khi nộp bài. Chúc may mắn!
